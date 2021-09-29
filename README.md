@@ -1,24 +1,56 @@
-# README
+# テーブル設計
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## users テーブル
 
-Things you may want to cover:
+| Column             | Type   | Options     |
+| ------------------ | ------ | ----------- |
+| nickname           | string | null: false |
+| email              | string | null: false |
+| encrypted_password | string | null: false |
+| name               | string | null: false |
+| kana_name          | string | null: false |
+| birth              | data   | null: false |
 
-* Ruby version
+- has_many :items
+- has_many :history
 
-* System dependencies
+## items テーブル
 
-* Configuration
+| Column     | Type       | Options     |
+| ------     | ------     | ----------- |
+| title      | string     | null: false |
+| description| text       | null: false |
+| concept    | text       | null: false |
+| user       | references | null: false |
+| category   | int        | null: false | Active hush
+| condition  | int        | null: false | Active hush
+| carriage   | int        | null: false | Active hush
+| area       | int        | null: false | Active hush
+| ship_day   | int        | null: false | Active hush
 
-* Database creation
+- has_one :history
 
-* Database initialization
+## history テーブル
 
-* How to run the test suite
+| Column    | Type       | Options     |
+| ----------| ------     | ----------- |
+| content   | text       | null: false |
+| item      | references | null: false |
+| user      | references | null: false |
 
-* Services (job queues, cache servers, search engines, etc.)
+- belongs_to :items
+- has_one :address
 
-* Deployment instructions
+## address テーブル
 
-* ...
+| Column    | Type       | Options     |
+| ----------| ------     | ----------- |
+| post_code | int        | null: false |
+| prefecture| int        | null: false |
+| city      | string     | null: false |
+| block     | int        | null: false |
+| building  | string     |             |
+| phone     | int        | null: false |
+| history   | references | null: false |
+
+- belongs_to :history
