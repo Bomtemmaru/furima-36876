@@ -18,17 +18,17 @@
 
 ## items テーブル
 
-| Column     | Type       | Options     |
-| ------     | ------     | ----------- |
-| title      | string     | null: false |
-| description| text       | null: false |
-| concept    | text       | null: false |
-| category   | int        | null: false | Active hush
-| condition  | int        | null: false | Active hush
-| carriage   | int        | null: false | Active hush
-| area       | int        | null: false | Active hush
-| ship_day   | int        | null: false | Active hush
-| user       | references | null: false, foreign_key: true  |
+| Column        | Type       | Options     |
+| ------        | ------     | ----------- |
+| title         | string     | null: false |
+| description   | text       | null: false |
+| category_id   | int        | null: false | Active hush
+| condition_id  | int        | null: false | Active hush
+| carriage_id   | int        | null: false | Active hush
+| prefecture_id | int        | null: false | Active hush
+| ship_day_id   | int        | null: false | Active hush
+| price         | int        | null: false | 
+| user          | references | null: false, foreign_key: true  |
 
 - has_one :history
 - belongs_to :user
@@ -37,8 +37,8 @@
 
 | Column    | Type       | Options     |
 | ----------| ------     | ----------- |
-| item      | references | null: false |
-| user      | references | null: false |
+| item      | references | null: false, foreign_key: true  |
+| user      | references | null: false, foreign_key: true  |
 
 - belongs_to :item
 - has_one :address
@@ -46,14 +46,14 @@
 
 ## address テーブル
 
-| Column    | Type       | Options     |
-| ----------| ------     | ----------- |
-| post_code | string     | null: false |
-| prefecture| int        | null: false |
-| city      | string     | null: false |
-| block     | int        | null: false |
-| building  | string     |             |
-| phone     | string     | null: false |
-| history   | references | null: false |
+| Column         | Type       | Options     |
+| ----------     | ------     | ----------- |
+| post_code      | string     | null: false |
+| prefecture _id | int        | null: false |
+| city           | string     | null: false |
+| block          | int        | null: false |
+| building       | string     |             |
+| phone          | string     | null: false |
+| history        | references | null: false, foreign_key: true  |
 
 - belongs_to :history
