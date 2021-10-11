@@ -44,7 +44,7 @@
 - has_one :address
 - belongs_to :user
 
-## address テーブル
+## orders テーブル
 
 | Column         | Type       | Options                         |
 | ----------     | ------     | -----------                     |

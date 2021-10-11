@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :edit, :update]
   before_action :move_to_index, only: [:edit, :update]
   before_action :sample, only: [:show, :edit, :update, :destroy]
+  before_action :buy, only: :edit
 
   def index
     @item = Item.includes(:user).order("created_at DESC")
@@ -49,6 +50,13 @@ class ItemsController < ApplicationController
 
   def sample
     @item = Item.find(params[:id])
+  end
+
+  def buy
+    @item = Item.find(params[:id])
+    if @item.history.present? 
+      redirect_to root_path
+    end
   end
 
 end
