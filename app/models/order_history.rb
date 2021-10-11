@@ -9,6 +9,8 @@ class OrderHistory
     validates :city
     validates :block
     validates :phone
+    validates :user_id
+    validates :item_id
   end
 
   def save
