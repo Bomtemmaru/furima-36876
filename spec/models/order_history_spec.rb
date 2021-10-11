@@ -6,7 +6,7 @@ RSpec.describe OrderHistory, type: :model do
       user = FactoryBot.create(:user)
       item = FactoryBot.create(:item)
       @order_history = FactoryBot.build(:order_history, user_id: user.id, item_id: item.id)
-      sleep(1.5)
+      sleep(1)
     end
 
     context '内容に問題ない場合' do
@@ -64,7 +64,25 @@ RSpec.describe OrderHistory, type: :model do
         @order_history.valid?
         expect(@order_history.errors.full_messages).to include("Phone can't be blank")
       end
+
+      it '電話番号が9桁以下では購入できない' do
+        @order_history.phone = '123456'
+        @order_history.valid?
+        expect(@order_history.errors.full_messages).to include("Phone is too short (minimum is 10 characters)")
+      end
       
+      it '電話番号が12桁以上では購入できない' do
+        @order_history.phone = '123456789012'
+        @order_history.valid?
+        expect(@order_history.errors.full_messages).to include("Phone is too long (maximum is 11 characters)")
+      end
+
+      it '電話番号に半角数字以外が含まれている場合は購入できない（※半角数字以外が一文字でも含まれていれば良い）' do
+        @order_history.phone = '１２３４５６７８９０'
+        @order_history.valid?
+        expect(@order_history.errors.full_messages).to include("Phone is not a number")
+      end
+
       it 'userが紐付いていないと保存できないこと' do
         @order_history.user_id = nil
         @order_history.valid?

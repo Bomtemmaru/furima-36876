@@ -1,10 +1,10 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: :index
+  before_action :sample, only: [:index, :create, :buy]
   before_action :buy
 
   def index
     @order_history = OrderHistory.new
-    @item = Item.find(params[:item_id])
   end
 
   def new
@@ -12,7 +12,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_history = OrderHistory.new(order_params)
     if @order_history.valid?
       pay_item
@@ -38,9 +37,13 @@ class OrdersController < ApplicationController
     )
   end
 
-  def buy
+  def sample
     @item = Item.find(params[:item_id])
-    if @item.history.present? 
+  end
+
+
+  def buy
+    if @item.history.present? || current_user.id = @item.history.user_id
       redirect_to root_path
     end
   end
