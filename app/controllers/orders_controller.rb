@@ -43,7 +43,7 @@ class OrdersController < ApplicationController
 
 
   def buy
-    if @item.history.present? || current_user.id = @item.history.user_id
+    if @item.history.present? && current_user.id = @item.history.user_id
       redirect_to root_path
     end
   end
