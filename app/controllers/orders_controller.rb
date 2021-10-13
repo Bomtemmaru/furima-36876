@@ -5,6 +5,9 @@ class OrdersController < ApplicationController
 
   def index
     @order_history = OrderHistory.new
+    # if current_user.id = @item.user_id
+    #   redirect_to root_path
+    # end
   end
 
   def new
@@ -43,7 +46,7 @@ class OrdersController < ApplicationController
 
 
   def buy
-    if @item.history.present? || current_user.id = @item.user_id
+    if @item.history.present? || current_user.id == @item.user_id
       redirect_to root_path 
     end
   end
